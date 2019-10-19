@@ -1,7 +1,7 @@
 <?php
 namespace Symverse;
 
-class TransactionRaw {
+class RawTransaction {
 
     private $from;
     private $nonce;
