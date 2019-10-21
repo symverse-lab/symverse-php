@@ -118,13 +118,13 @@ class RawTransaction {
     public function getList(): array {
         return [
              "from" => $this->from,
-             "nonce" => hexdec($this->nonce),
+             "nonce" => $this->preHex($this->hexup($this->nonce))  == "0x00" ? hexdec(0) : $this->preHex($this->nonce) ,
              "gasPrice" => $this->gasPrice,
              "gasLimit" => $this->gasLimit,
              "to" => $this->to,
              "value" => hexdec($this->value),
              "input" => $this->preHex($this->input),
-             "type" => hexdec($this->type),
+             "type" => $this->preHex($this->hexup($this->type) )  == "0x00" ? hexdec(0) : $this->preHex($this->type ) ,
              "workNodes" => $this->workNodes,
              "extraData" => $this->extraData,
              "v" => hexdec($this->v),
