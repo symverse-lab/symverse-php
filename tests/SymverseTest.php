@@ -1,15 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Symverse\Hash;
 use Symverse\RawTransaction;
 use Web3p\RLP\RLP;
 
 final class SymverseTest extends TestCase {
-    public function testSha3(): void {
-       $a = Hash::hash('a');
-       $this->assertStringContainsString("", $a, "야호");
-    }
 
     public function testSignRawTransaction(): void {
 
@@ -26,13 +21,11 @@ final class SymverseTest extends TestCase {
         $workNodes = ["0x00021000000000010002"];
         $extra = "";
 
-
         $tx = new RawTransaction($from, $nonce, $gasPrice, $gasLimit, $to, $value, $input, $type, $workNodes, $extra);
         $message = $tx->getRaw($pk, 25);
 
-        print_r("/////");
-
-        print_r((15));
+        print_r($message);
+        $this->assertNotEmpty($message);
     }
 
     public function testSignSCT20RawTransaction(): void {
@@ -40,9 +33,8 @@ final class SymverseTest extends TestCase {
         $rlp = new RLP();
 
         $pk = "7eb1003bf3378e3c177d3db67a6591d3c1af101a53de800ede23d147ecf0d698";
-
         $from = "0x00021000000000010002";
-        $nonce = "0xf";
+        $nonce = "0x1";
         $gasPrice = "0x03f5476a00";
         $gasLimit = "0x027f4b";
         $to = "";
@@ -52,9 +44,10 @@ final class SymverseTest extends TestCase {
         $workNodes = ["0x00021000000000010002"];
         $extra = "";
 
-
         $tx = new RawTransaction($from, $nonce, $gasPrice, $gasLimit, $to, $value, $input, $type, $workNodes, $extra);
         $message = $tx->getRaw($pk, 25);
+
         print_r($message);
+        $this->assertNotEmpty($message);
     }
 }
