@@ -1,6 +1,6 @@
 {
     "name": "gocheat/symverse-raw-tx",
-    "description": "A library integrating Ethereum with typed PHP.",
+    "description": "A library integrating Symverse Tx Raw with typed PHP.",
     "minimum-stability":"dev",
     "autoload": {
         "psr-4": {
