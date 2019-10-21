@@ -5,15 +5,11 @@ Symverse PHP Transaction Raw 라이브러리입니다.
 ## Installation
 
 #### Composer install
-```php
+```
 $ composer require gocheat/symverse-raw-tx
 ```
 
 ## Usage
-
-```php
-composer require gocheat/symverse-raw-tx
-```
 
 1. 일반 Transaction Raw 생성
 ```php
@@ -39,7 +35,7 @@ $tx = new RawTransaction($from, $nonce, $gasPrice, $gasLimit, $to, $value, $inpu
 $raw = $tx->getRaw($pk, $chainId);
 // f8768a00021000000000010002158503f5476a0083027f4b8a000210000000000200028201550000cb8a000210000000000100028080a0fac134101fb8f08083af38e59f3abee958c869e0fed9314d2a609c862427f131a02c91acea0ab6ba4d09e65a371706c986f4844ac3d047d6dd27e321c2424c6a0b
 ````
-1. SCT 트랜젝션 전송시
+1. SCT Transaction Raw 생성
 ```php
 use Symverse\RawTransaction;
 use Web3p\RLP\RLP;
