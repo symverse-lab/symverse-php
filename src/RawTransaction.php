@@ -1,9 +1,11 @@
 <?php
 namespace Symverse;
 
-use BitWasp\Buffertools\Buffer;
-use Ethereum\RLP\Rlp;
 use kornrunner\Secp256k1;
+use Web3p\RLP\RLP;
+
+//hex2bin
+//dechex
 
 class RawTransaction {
 
@@ -41,10 +43,10 @@ class RawTransaction {
      * @param string $value
      * @param string $input
      * @param string $type
-     * @param string $workNodes
+     * @param array $workNodes
      * @param string $extraData
      */
-    public function __construct(string $from, string $nonce, string $gasPrice, string $gasLimit, string $to, string $value, string $input, string $type, string $workNodes, string $extraData)
+    public function __construct(string $from, string $nonce, string $gasPrice, string $gasLimit, string $to, string $value, $input, string $type, array $workNodes, string $extraData)
     {
         $this->from = $from;
         $this->nonce = $nonce;
@@ -58,9 +60,9 @@ class RawTransaction {
         $this->extraData = $extraData;
     }
 
-    public function getRaw(string $privateKey, int $chainId = 0): string {
+    public function getRaw(string $privateKey, int $chainId): string {
         if ($chainId < 0) {
-            throw new \RuntimeException('ChainID must be positive');
+            throw new \RuntimeException('ChainId must be positive');
         }
         $this->v = '';
         $this->r = '';
@@ -87,6 +89,9 @@ class RawTransaction {
         $signed    = $secp256k1->sign($hash, $privateKey);
         $this->r   = $this->hexup(gmp_strval($signed->getR(), 16));
         $this->s   = $this->hexup(gmp_strval($signed->getS(), 16));
+//        print_r("???");
+//        print_r($signed->getRecoveryParam());
+//        print_r( dechex ((int) $signed->getRecoveryParam()));
         $this->v   = dechex ((int) $signed->getRecoveryParam());
     }
 
@@ -101,6 +106,7 @@ class RawTransaction {
             unset($input['r']);
             unset($input['s']);
         }
+
         $encoded = $this->RLPencode($input);
         return Hash::hash(hex2bin($encoded));
     }
@@ -109,52 +115,39 @@ class RawTransaction {
      * @return array
      * @throws \Exception
      */
-    public function getList(): array
-    {
+    public function getList(): array {
         return [
              "from" => $this->from,
-             "nonce" => $this->nonce,
+             "nonce" => hexdec($this->nonce),
              "gasPrice" => $this->gasPrice,
              "gasLimit" => $this->gasLimit,
              "to" => $this->to,
-             "value" => $this->value,
-             "input" => $this->input,
+             "value" => hexdec($this->value),
+             "input" => $this->preHex($this->input),
+             "type" => hexdec($this->type),
              "workNodes" => $this->workNodes,
              "extraData" => $this->extraData,
-             "v" => $this->v,
-             "r" => $this->r,
-             "s" => $this->s,
+             "v" => hexdec($this->v),
+             "r" => $this->preHex($this->r),
+             "s" => $this->preHex($this->s),
         ];
     }
 
     private function RlpEncode(array $input): string {
         $rlp  = new RLP;
-        $data = [];
-        foreach ($input as $item) {
-            $value  = strpos ($item, '0x') !== false ? substr ($item, strlen ('0x')) : $item;
-            $data[] = $value ? '0x' . $this->hexup($value) : '';
-        }
-        return $rlp->encode($data)->toString('hex');
+        // $input["r"] =
+        // $input["s"] =
+        return $rlp->encode($input)->toString('hex');
     }
 
     private function hexup(string $value): string {
         return strlen ($value) % 2 === 0 ? $value : "0{$value}";
     }
 
-    /**
-     * @param Buffer $privateKey
-     * @param Buffer $chainId (1 => mainet, 3 => robsten, 4 => rinkeby)
-     * @return Buffer
-     * @throws \Exception
-     */
-    public function signedTxRlp(Buffer $privateKey, Buffer $chainId = null): Buffer
-    {
-        $chainId = $chainId ?? Buffer::int('1');
-        $this->v = new Buffer();
-        $this->r = new Buffer();
-        $this->s = new Buffer();
-        return $this->sign($privateKey, $chainId);
+    private function preHex(string $value): string {
+        return strpos($value, '0x') === false ? "0x{$value}" : $value;
     }
+
 
     /**
      * @return mixed
