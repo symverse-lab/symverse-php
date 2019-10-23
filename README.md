@@ -11,7 +11,7 @@ $ composer require gocheat/symverse-raw-tx
 
 ## Usage
 
-1. 일반 Transaction Raw 생성
+- 일반 Transaction Raw 생성
 
 ```php
 use Symverse\RawTransaction;
@@ -37,7 +37,7 @@ $raw = $tx->getRaw($pk, $chainId);
 // f8768a00021000000000010002158503f5476a0083027f4b8a000210000000000200028201550000cb8a000210000000000100028080a0fac134101fb8f08083af38e59f3abee958c869e0fed9314d2a609c862427f131a02c91acea0ab6ba4d09e65a371706c986f4844ac3d047d6dd27e321c2424c6a0b
 ````
 
-2. SCT Transaction Raw 생성
+- SCT Transaction Raw 생성
 
 ```php
 use Symverse\RawTransaction;
@@ -50,12 +50,12 @@ $pk = "7eb1003bf3378e3c177d3db67a6591d3c1af101a53de800ede23d147ecf0d698";
 $chainId = 25
 
 $from = "0x00021000000000010002";
-$nonce = "0x1";
+$nonce = "0x0";
 $gasPrice = "0x03f5476a00";
 $gasLimit = "0x027f4b";
 $to = "";
 $value = "0x";
-$input = $rlp->encode(["0x14", "", ["TestToken",  "TXT", "0x55", "0x00021000000000010002"]])->toString('hex');
+$input = (new Sct(20, 0, new SctParameter("TestToken",  "TXT", "0x55", "0x00021000000000010002")))->getInput();
 $type = "0x1";
 $workNodes = ["0x00021000000000010002"];
 $extra = "";
