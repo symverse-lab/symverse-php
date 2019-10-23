@@ -2,10 +2,9 @@
 namespace Symverse;
 
 use kornrunner\Secp256k1;
+use Symverse\Utils\Hash;
+use Symverse\Utils\Hex;
 use Web3p\RLP\RLP;
-
-//hex2bin
-//dechex
 
 class RawTransaction {
 
@@ -41,19 +40,23 @@ class RawTransaction {
      * @param string $gasLimit
      * @param string $to
      * @param string $value
-     * @param string $input
+     * @param string|array $input
      * @param string $type
      * @param array $workNodes
      * @param string $extraData
      */
-    public function __construct(string $from, string $nonce, string $gasPrice, string $gasLimit, string $to, string $value, $input, string $type, array $workNodes, string $extraData)
-    {
+    public function __construct(string $from, string $nonce, string $gasPrice, string $gasLimit, string $to, string $value, $input, string $type, array $workNodes, string $extraData) {
+
+
+        $type = Hex::hexup(Hex::cleanPrefix($type)) == "00" ? hexdec(0) : Hex::preHex($type);
+        $nonce = Hex::hexup(Hex::cleanPrefix($nonce)) == "00" ? hexdec(0) : Hex::preHex($nonce);
+
         $this->from = $from;
         $this->nonce = $nonce;
         $this->gasPrice = $gasPrice;
         $this->gasLimit = $gasLimit;
         $this->to = $to;
-        $this->value = $value;
+        $this->value = hexdec($value);
         $this->input = $input;
         $this->type = $type;
         $this->workNodes = $workNodes;
@@ -83,15 +86,9 @@ class RawTransaction {
         $hash      = $this->hash($chainId);
         $secp256k1 = new Secp256k1();
 
-        /**
-         * @var Signature
-         */
         $signed    = $secp256k1->sign($hash, $privateKey);
-        $this->r   = $this->hexup(gmp_strval($signed->getR(), 16));
-        $this->s   = $this->hexup(gmp_strval($signed->getS(), 16));
-//        print_r("???");
-//        print_r($signed->getRecoveryParam());
-//        print_r( dechex ((int) $signed->getRecoveryParam()));
+        $this->r   = Hex::hexup(gmp_strval($signed->getR(), 16));
+        $this->s   = Hex::hexup(gmp_strval($signed->getS(), 16));
         $this->v   = dechex ((int) $signed->getRecoveryParam());
     }
 
@@ -116,20 +113,21 @@ class RawTransaction {
      * @throws \Exception
      */
     public function getList(): array {
+
         return [
              "from" => $this->from,
-             "nonce" => $this->preHex($this->hexup($this->nonce))  == "0x00" ? hexdec(0) : $this->preHex($this->nonce) ,
+             "nonce" => $this->nonce ,
              "gasPrice" => $this->gasPrice,
              "gasLimit" => $this->gasLimit,
              "to" => $this->to,
-             "value" => hexdec($this->value),
-             "input" => $this->preHex($this->input),
-             "type" => $this->preHex($this->hexup($this->type) )  == "0x00" ? hexdec(0) : $this->preHex($this->type ) ,
+             "value" => $this->value,
+             "input" => $this->input,
+             "type" => $this->type ,
              "workNodes" => $this->workNodes,
              "extraData" => $this->extraData,
              "v" => hexdec($this->v),
-             "r" => $this->preHex($this->r),
-             "s" => $this->preHex($this->s),
+             "r" => Hex::preHex($this->r),
+             "s" => Hex::preHex($this->s),
         ];
     }
 
@@ -140,13 +138,6 @@ class RawTransaction {
         return $rlp->encode($input)->toString('hex');
     }
 
-    private function hexup(string $value): string {
-        return strlen ($value) % 2 === 0 ? $value : "0{$value}";
-    }
-
-    private function preHex(string $value): string {
-        return strpos($value, '0x') === false ? "0x{$value}" : $value;
-    }
 
 
     /**
@@ -228,7 +219,4 @@ class RawTransaction {
     {
         return $this->extraData;
     }
-
-
-
 }
