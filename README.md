@@ -1,4 +1,4 @@
-# Symverse-PHP  ![build](https://travis-ci.org/gocheat/symphp.svg?branch=master)
+# Symverse-PHP  ![build](https://api.travis-ci.org/symverse-lab/symverse-php.svg?branch=master)
 Symverse Client 전용 PHP 라이브러리입니다.
 
 
