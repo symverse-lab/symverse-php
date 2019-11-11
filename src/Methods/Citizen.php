@@ -18,14 +18,14 @@ class Citizen extends RpcMethod
     }
 
     //TODO: 개발 필요
-    function sendCitizen($oracle):ResponseInterface {
-        return $this->send(__FUNCTION__, func_get_args());
-    }
+//    function sendCitizen($oracle):ResponseInterface {
+//        return $this->send(__FUNCTION__, func_get_args());
+//    }
 
     //TODO: 개발 필요
-    function sendRawCitizen(BytesData $raw):ResponseInterface {
-        return $this->send(__FUNCTION__, func_get_args());
-    }
+//    function sendRawCitizen(BytesData $raw):ResponseInterface {
+//        return $this->send(__FUNCTION__, func_get_args());
+//    }
 
     function getCitizenByHash(BlockHash $hash):ResponseInterface {
         return $this->send(__FUNCTION__, func_get_args());

@@ -19,14 +19,14 @@ class Oracle extends RpcMethod
     }
 
     //TODO: 개발 필요
-    function sendOracle($oracle):ResponseInterface {
-        return $this->send(__FUNCTION__, func_get_args());
-    }
+//    function sendOracle($oracle):ResponseInterface {
+//        return $this->send(__FUNCTION__, func_get_args());
+//    }
 
     //TODO: 개발 필요
-    function sendRawOracle(BytesData $raw):ResponseInterface {
-        return $this->send(__FUNCTION__, func_get_args());
-    }
+//    function sendRawOracle(BytesData $raw):ResponseInterface {
+//        return $this->send(__FUNCTION__, func_get_args());
+//    }
 
     function sendOracleJSON(SymId $symId, $jsonString):ResponseInterface {
         return $this->send(__FUNCTION__, func_get_args());

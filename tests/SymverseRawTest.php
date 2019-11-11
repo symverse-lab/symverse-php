@@ -5,7 +5,7 @@ use Symverse\RawTransaction;
 use Symverse\Sct\Sct;
 use Symverse\Sct\SctParameter;
 
-final class SymverseTest extends TestCase {
+final class SymverseRawTest extends TestCase {
 
     public function testSignRawTransaction(): void {
 
