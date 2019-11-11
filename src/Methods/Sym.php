@@ -33,7 +33,7 @@ class Sym extends RpcMethod
         return $this->send(__FUNCTION__, func_get_args());
     }
 
-    function getBalance(SymId $symId):ResponseInterface{
+    function getBalance(SymId $symId, BlockNumber $blockNumber):ResponseInterface{
         return $this->send(__FUNCTION__, func_get_args());
     }
 

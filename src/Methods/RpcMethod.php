@@ -26,13 +26,12 @@ abstract class RpcMethod
                 $params[$key] = $param->toString();
             }
         }
-
         $request = $this->client->request(self::$defaultRpcId, $this->prefix.'_'.$method, $params);
         $response = $this->client->send(
             $this->client->request(self::$defaultRpcId, $this->prefix.'_'.$method, $params)
         );
         if ($response->getRpcErrorCode() < 0) {
-            throw new RequestException($response->getRpcErrorMessage(), $request, $response );
+            throw  RequestException::create($request, $response );
         }
         return $response;
     }

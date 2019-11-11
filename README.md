@@ -1,17 +1,50 @@
-# Symverse PHP Transaction Raw ![build](https://travis-ci.org/gocheat/symphp.svg?branch=master)
-Symverse PHP Transaction Raw 라이브러리입니다.
+# Symverse-PHP  ![build](https://travis-ci.org/gocheat/symphp.svg?branch=master)
+Symverse Client 전용 PHP 라이브러리입니다.
 
 
 ## Installation
 
 #### Composer install
 ```
-$ composer require gocheat/symverse-raw-tx
+$ composer require symverse-lab/symverse-php
 ```
 
 ## Usage
 
-- 일반 Transaction Raw 생성
+- 기본적인 RPC API 호출 방
+
+```php
+$symId = new SymId('0x00021000000000010002');
+$randomHash = '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238';
+
+$client = new EthereumClient('http://localhost:8545');
+
+// net
+echo $client->net()->version() , PHP_EOL;
+echo $client->net()->listening() , PHP_EOL;
+echo $client->net()->peerCount() , PHP_EOL;
+
+
+// web3
+echo $client->web3()->clientVersion() , PHP_EOL;
+echo $client->web3()->sha3('0x68656c6c6f20776f726c64') , PHP_EOL;
+echo $client->sym()->protocolVersion() , PHP_EOL;
+echo $client->sym()->syncing() , PHP_EOL;
+
+// sym
+$symbase = $client->sym()->symbase();
+echo $client->sym()->blockNumber()->getRpcResult(), PHP_EOL;
+echo $client->sym()->getBlockByNumber(new BlockNumber(1), true)->getRpcResult(), PHP_EOL;
+echo $client->sym()->getBalance($symId)->getRpcResult(), PHP_EOL;
+
+//other method ( warrant, citizen, oracle )
+$client->warrant()-> ...
+$client->citizen()-> ...
+$client->oracle()-> ...
+
+````
+
+- Transaction Raw 생성
 
 ```php
 use Symverse\RawTransaction;
