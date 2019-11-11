@@ -11,7 +11,7 @@ $ composer require symverse-lab/symverse-php
 
 ## Usage
 
-- 기본적인 RPC API 호출 방
+- 클라이언트에서의 JSON-RPC API 호출
 
 ```php
 $symId = new SymId('0x00021000000000010002');

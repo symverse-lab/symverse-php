@@ -1,5 +1,5 @@
 {
-    "name": "gocheat/symverse-raw-tx",
+    "name": "symverse-lab/symverse-php",
     "description": "A library integrating Symverse Tx Raw with typed PHP.",
     "minimum-stability":"dev",
     "autoload": {
