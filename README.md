@@ -17,7 +17,7 @@ $ composer require symverse-lab/symverse-php
 $symId = new SymId('0x00021000000000010002');
 $randomHash = '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238';
 
-$client = new EthereumClient('http://localhost:8545');
+$client = new SymverseClinet('http://localhost:8545');
 
 // net
 echo $client->net()->version() , PHP_EOL;
