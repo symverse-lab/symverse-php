@@ -10,11 +10,10 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/digitaldonkey/ethereum-php.git"
+            "url": "https://github.com/symverse-lab/symverse-php"
         }
     ],
     "require": {
-        "digitaldonkey/ethereum-php": "dev-master",
         "n-other/php-sha3": "dev-master",
         "kornrunner/secp256k1": "0.1.2",
         "web3p/rlp": "dev-master"

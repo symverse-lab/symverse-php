@@ -8,7 +8,6 @@
 
 namespace Symverse\DataType;
 
-
 use Symverse\Utils\Hex;
 
 class SymId{
