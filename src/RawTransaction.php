@@ -138,8 +138,6 @@ class RawTransaction {
         return $rlp->encode($input)->toString('hex');
     }
 
-
-
     /**
      * @return mixed
      */
