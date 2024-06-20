@@ -1,6 +1,5 @@
 # Symverse-PHP  ![build](https://api.travis-ci.org/symverse-lab/symverse-php.svg?branch=master)
-Symverse Client 전용 PHP 라이브러리입니다.
-
+PHP library for Symverse Client 
 
 ## Installation
 
@@ -11,8 +10,7 @@ $ composer require symverse-lab/symverse-php
 
 ## Usage
 
-- 클라이언트에서의 JSON-RPC API 호출
-
+- Call JSON-RPC API from client 
 ```php
 $symId = new SymId('0x00021000000000010002');
 $randomHash = '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238';
@@ -44,7 +42,7 @@ $client->oracle()-> ...
 
 ````
 
-- Transaction Raw 생성
+- Create Transaction Raw 
 
 ```php
 use Symverse\RawTransaction;
@@ -70,7 +68,7 @@ $raw = $tx->getRaw($pk, $chainId);
 // f8768a00021000000000010002158503f5476a0083027f4b8a000210000000000200028201550000cb8a000210000000000100028080a0fac134101fb8f08083af38e59f3abee958c869e0fed9314d2a609c862427f131a02c91acea0ab6ba4d09e65a371706c986f4844ac3d047d6dd27e321c2424c6a0b
 ````
 
-- SCT Transaction Raw 생성
+- Create SCT Transaction Raw
 
 ```php
 use Symverse\RawTransaction;
